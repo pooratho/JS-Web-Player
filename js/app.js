@@ -1,3 +1,6 @@
+const volumeSlider = document.getElementById("volume-slider");
+const muteBtn = document.getElementById("mute-btn");
+
 function formatTime(seconds) {
   const min = Math.floor(seconds / 60);
   const sec = Math.floor(seconds % 60);
@@ -33,4 +36,27 @@ audio.addEventListener("timeupdate", () => {
 
 progressBar.addEventListener("input", () => {
   audio.currentTime = progressBar.value;
+});
+
+volumeSlider.addEventListener("input", () => {
+    audio.volume = event.target.value;
+
+    if (audio.volume === 0) {
+        muteBtn.textContent = "Unmute";
+    } else {
+        muteBtn.textContent = "Mute";
+        audio.muted = false;
+    }
+});
+
+muteBtn.addEventListener("click", () => {
+    if (audio.muted) {
+        audio.muted = false;
+        muteBtn.textContent = "Mute";
+        volumeSlider.value = audio.volume;
+    } else {
+        audio.muted = true;
+        muteBtn.textContent = "Unmute";
+        volumeSlider.value = 0;
+    }
 });
