@@ -9,6 +9,11 @@
     <body>
         <div class="player-container">
             <audio id="audio-element" src="assets/audio/Goodbye To A Lover Again   Isak Danielson.m4a"></audio>
+            <div class="progress-container">
+                <span id="current-time">00:00</span>
+                <input type="range" id="progress-bar" value="0" min="0" step="1">
+                <span id="duration">00:00</span>
+            </div>
             <div class="controls">
                 <button id="play-pause-btn">Play</button>
             </div>
