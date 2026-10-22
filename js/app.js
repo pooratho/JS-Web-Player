@@ -45,6 +45,17 @@ function loadSong(song) {
   audio.src = song.src;
 }
 
+function playNextSong() {
+  currentSongIndex++;
+
+  if (currentSongIndex >= playlist.length) {
+    currentSongIndex = 0;
+  }
+
+  loadSong(playlist[currentSongIndex]);
+  audio.play();
+  playPauseBtn.textContent = "Pause";
+}
 // بارگذاری اولین آهنگ هنگام لود شدن صفحه
 loadSong(playlist[currentSongIndex]);
 
@@ -96,13 +107,7 @@ muteBtn.addEventListener("click", () => {
 });
 
 nextBtn.addEventListener("click", () => {
-  currentSongIndex++;
-  if (currentSongIndex >= playlist.length) {
-    currentSongIndex = 0;
-  }
-  loadSong(playlist[currentSongIndex]);
-  audio.play();
-  playPauseBtn.textContent = "Pause";
+  playNextSong();
 });
 
 prevBtn.addEventListener("click", () => {
@@ -114,4 +119,8 @@ prevBtn.addEventListener("click", () => {
   loadSong(playlist[currentSongIndex]);
   audio.play();
   playPauseBtn.textContent = "Pause";
+});
+
+audio.addEventListener("ended", () => {
+  playNextSong();
 });
