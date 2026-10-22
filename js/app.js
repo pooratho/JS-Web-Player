@@ -31,6 +31,7 @@ const titleDisplay = document.getElementById("song-title");
 const artistDisplay = document.getElementById("song-artist");
 const nextBtn = document.getElementById("next-btn");
 const prevBtn = document.getElementById("prev-btn");
+const playlistList = document.getElementById("playlist-list");
 
 function formatTime(seconds) {
   if (isNaN(seconds)) return "00:00";
@@ -43,6 +44,7 @@ function loadSong(song) {
   titleDisplay.textContent = song.title;
   artistDisplay.textContent = song.artist;
   audio.src = song.src;
+  renderPlaylist();
 }
 
 function playNextSong() {
@@ -56,6 +58,31 @@ function playNextSong() {
   audio.play();
   playPauseBtn.textContent = "Pause";
 }
+
+function renderPlaylist() {
+  playlistList.innerHTML = "";
+
+  playlist.forEach((song, index) => {
+    const li = document.createElement("li");
+    li.textContent = `${song.title} - ${song.artist}`;
+
+    if (index === currentSongIndex) {
+      li.classList.add("active");
+    }
+
+    li.addEventListener("click", () => {
+      currentSongIndex = index;
+      loadSong(playlist[currentSongIndex]);
+      audio.play();
+      playPauseBtn.textContent = "Pause";
+      renderPlaylist();
+    });
+
+    playlistList.appendChild(li);
+  });
+}
+
+renderPlaylist();
 // بارگذاری اولین آهنگ هنگام لود شدن صفحه
 loadSong(playlist[currentSongIndex]);
 
